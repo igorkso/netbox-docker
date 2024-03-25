@@ -1,4 +1,4 @@
-# Deployment do Netbox com Docker e Ansible
+# Netbox-Ansible LSD-UFCG
 
 Este projeto automatiza o deployment do Netbox, uma ferramenta de gestão de infraestrutura, utilizando Docker e Ansible.
 
