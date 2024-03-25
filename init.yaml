@@ -1,0 +1,15 @@
+---
+- name: Install docker engine
+  hosts: hipervisor
+  become: true
+  roles:
+  - role: docker
+    tags: 
+      - docker-install
+  - role: netbox
+    tags:
+      - netbox-install
+    
+  
+      
+

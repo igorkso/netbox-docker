@@ -1,0 +1,43 @@
+---
+- name: Define docker-compose template
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ netbox_conf_path }}/docker-compose.yaml"
+
+- name: Define volume files
+  ansible.builtin.copy:
+    src: "{{ volumes }}"
+    dest: "{{ vols_dest }}" 
+
+- name: Extract volumes
+  ansible.builtin.shell: tar -xzf "{{ vols_dest }}/volumes.tar.gz"
+
+- name: Define env path
+  ansible.builtin.file:
+    path: "{{ env_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Define netbox template
+  template:
+    src: netbox.env.j2
+    dest: "{{ env_path }}/netbox.env"
+
+- name: Define redis template
+  template:
+    src: redis.env.j2
+    dest: "{{ env_path }}/redis.env"
+
+- name: Define postgres template
+  template:
+    src: postgres.env.j2
+    dest: "{{ env_path }}/postgres.env"
+
+- name: Define redis-cache template
+  template:
+    src: redis-cache.env.j2
+    dest: "{{ env_path }}/redis-cache.env"
+
+- name: Up services
+  ansible.builtin.command:
+    cmd: "docker compose -f {{ netbox_conf_path }}/docker-compose.yaml up -d"
